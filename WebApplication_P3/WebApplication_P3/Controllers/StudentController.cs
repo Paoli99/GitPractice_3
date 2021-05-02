@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 namespace WebApplication_P3.Controllers
 {
     [ApiController]
-    [Route("[/api/students]")]
+    [Route("/api/info")]
     public class StudentController : ControllerBase
     {
         private readonly IConfiguration _config; 
@@ -23,7 +23,10 @@ namespace WebApplication_P3.Controllers
         {
             string projectTitle = _config.GetSection("Project").GetSection("Title").Value;
             string dbConnection = _config.GetConnectionString("Database");
+
             Console.Out.WriteLine($"We are connecting to.... {dbConnection}");
+
+ 
             return new List<Student>() 
             { 
                 new Student() {Name = $"Mauricio from env: {projectTitle}" },
@@ -39,13 +42,6 @@ namespace WebApplication_P3.Controllers
             { 
                 Name = studentName
             };
-        }
-
-        [HttpGet]
-        public Student UpdateStudents([FromBody] Student student)
-        {
-            student.Name = "updated";
-            return student; 
         }
 
         [HttpDelete]
